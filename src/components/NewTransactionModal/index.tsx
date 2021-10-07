@@ -1,8 +1,10 @@
 import Modal from 'react-modal'
-import { Container } from './styles'
+import { Container, RadioBox, TransactionTypeContainer } from './styles'
 
 import closeImg from '../../assets/close.svg'
-
+import incomeImg from '../../assets/income.svg'
+import outcomeImg from '../../assets/outcome.svg'
+import { useState } from 'react'
 
 interface NewTransactionModalProps {
     isOpen: boolean
@@ -11,6 +13,17 @@ interface NewTransactionModalProps {
 
 
 export function NewTransactionsModal({ isOpen, onRequestClose }:NewTransactionModalProps  ){
+
+    const [type, setType] = useState('deposit')
+
+    function handleSetTypeDeposit(){
+        return setType('deposit')
+    }
+
+    function handleSetTypeWithdraw(){
+        return setType('withdraw')
+    }
+
     return(
         <Modal
             isOpen={isOpen}
@@ -36,6 +49,28 @@ export function NewTransactionsModal({ isOpen, onRequestClose }:NewTransactionMo
                     type="number"
                     placeholder="Valor"                                 
                 />
+
+                <TransactionTypeContainer>
+                    <RadioBox 
+                        type='button'         
+                        onClick={handleSetTypeDeposit}           
+                        isActive={type === 'deposit'}
+                        activeColor="green"
+                    >
+                      <img src={incomeImg} alt="Entrada"/>
+                      <span>Entrada</span>
+                    </RadioBox>
+
+                    <RadioBox 
+                        type='button'     
+                        onClick={handleSetTypeWithdraw}                 
+                        isActive={type === 'withdraw'}
+                        activeColor="red"
+                    >
+                      <img src={outcomeImg} alt="Saída"/>
+                      <span>Saída</span>
+                    </RadioBox>
+                </TransactionTypeContainer>
 
                 <input                     
                     placeholder="Categoria"                                 
