@@ -5,6 +5,7 @@ import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
 import { FormEvent, useState } from 'react'
+import { api } from '../../services/api'
 
 interface NewTransactionModalProps {
     isOpen: boolean
@@ -30,19 +31,15 @@ export function NewTransactionsModal({ isOpen, onRequestClose }: NewTransactionM
     }
 
     function handleCreateNewTransaction(event: FormEvent){
-        console.log({
-            title,
-            value,
-            category,
-            type
-        })
         event.preventDefault()
-        console.log({
+        const data = {
             title,
             value,
             category,
             type
-        })
+        }
+
+        api.post('/transaction', data)
     }
 
     return(
@@ -59,7 +56,7 @@ export function NewTransactionsModal({ isOpen, onRequestClose }: NewTransactionM
             >
                 <img src={closeImg} alt="Fechar modal" />
             </button>
-
+            
             <Container onSubmit={handleCreateNewTransaction}>
                 <h2>Cadastrar transação</h2>
 
